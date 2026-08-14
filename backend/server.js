@@ -31,9 +31,10 @@ app.post("/admin/login",async (req,res)=>{
 });
 
 //getting all students
-app.get("admin/students",async (req,res)=>{
+app.get("/admin/students",async (req,res)=>{
     const students=await studentdb.find();
     res.send(students);
+    
 });
 
 // adding students

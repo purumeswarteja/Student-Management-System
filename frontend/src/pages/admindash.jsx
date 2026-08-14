@@ -1,30 +1,53 @@
 import axios from "axios";
 import { useState } from "react";
-import { useEffect } from "react";
+import  Student_Form from "./add_student_form";
+
 function AdminDash(){
-    const [students,showstudents]=useState([]);
+    const [students,Setstudents]=useState([]);
+    const [student,Setstudent]=useState(false);
+    const [addstudent,Setaddstudent]=useState(false);
+    
     async function Student(){
         const get_data=await axios.get("http://localhost:8000/admin/students");
-        showstudents(get_data.data);
+        Setstudent(true);
+        Setstudents(get_data.data);
+       
+    }
+    async function Form(){
         
+        Setaddstudent(true);
+
     }
 
     return (
-    <form>
+    <div>
         <h1>Admin Dashboard</h1>
         <button type="button" onClick={Student}>Student</button>
         <button type="button"> Faculty</button>
-        {students.map((e)=>(
+        {student && (
+            <div>
+            {students.map((e)=>(
             <div key={e._id} >
-                <p>e.name</p>
-                <p>e.studentId</p>
-                <p>e.department</p>
-                <p>e.phone</p>
-                <button type="button">Add Student</button>
+                <p>{e.name}</p>
+                <p>{e.studentId}</p>
+                <p>{e.department}</p>
+                <p>{e.phone}</p>
+                
             </div>
         ))}
+        <br/>
+        <button type="button" onClick={Form}>Add Student</button>
+        </div>
         
-    </form>
+        
+        )}
+        {addstudent && (
+            <div>
+                <br/>
+                < Student_Form/>
+            </div>
+        )}
+    </div>
     )
 }
 export default AdminDash;
