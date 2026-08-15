@@ -39,6 +39,7 @@ app.get("/admin/students",async (req,res)=>{
 
 // adding students
 app.post("/admin/student/add",async (req,res)=>{
+    console.log("reached");
     try{
     const new_student=await req.body;
     await studentdb.create(new_student);
@@ -46,7 +47,7 @@ app.post("/admin/student/add",async (req,res)=>{
     console.log(new_student);
     }
     catch(err){
-        res.send(err);
+        console.log(err);
     }
 });
 

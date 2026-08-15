@@ -7,7 +7,9 @@ function AdminDash(){
     const [student,Setstudent]=useState(false);
     const [addstudent,Setaddstudent]=useState(false);
     
-    async function Student(){
+    async function Student(e){
+        
+
         const get_data=await axios.get("http://localhost:8000/admin/students");
         Setstudent(true);
         Setstudents(get_data.data);

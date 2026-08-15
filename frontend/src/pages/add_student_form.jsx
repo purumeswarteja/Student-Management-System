@@ -1,15 +1,40 @@
+import axios from "axios";
+import {useState} from "react";
+
 function Student_Form(){
-    async function Add_stu(){
-        const add_stu=await axios.post("http://localhost:8000/admin/student/add");
-        
+    const [student,Setstudent]=useState({
+            studentId:"",
+            name:"",
+            email:"",
+            phone:"",
+            department:"",
+            year:"",
+            section:"",
+            gender:"",
+    })
+    
+    async function Add_Stu(e){
+        e.preventDefault()
+        console.log(student);
+        try{
+        const add_stu=await axios.post("http://localhost:8000/admin/student/add",student);
+        console.log("called api");  
+        }
+        catch(err){
+            console.log("error :",err);
+        }  
     }
 return(
-<form onSubmit={Add_stu}>
+<form onSubmit={Add_Stu}>
     <label htmlFor="id">Student ID :</label>
     <input
         type="text"
         id="id"
         placeholder="Enter student ID"
+        value={student.studentId}
+        onChange={(e)=>Setstudent({
+            ...student,studentId:e.target.value
+        })}
     />
     <br /><br />
 
@@ -18,6 +43,10 @@ return(
         type="text"
         id="name"
         placeholder="Enter name"
+        value={student.name}
+        onChange={(e)=>{Setstudent({
+            ...student,name:e.target.value
+        })}}
     />
     <br /><br />
 
@@ -26,6 +55,10 @@ return(
         type="email"
         id="email"
         placeholder="Enter email"
+        value={student.email}
+        onChange={(e)=>{Setstudent({
+            ...student,email:e.target.value
+        })}}
     />
     <br /><br />
 
@@ -34,11 +67,17 @@ return(
         type="text"
         id="phone"
         placeholder="Enter phone no"
+        value={student.phone}
+        onChange={(e)=>{Setstudent({
+            ...student,phone:e.target.value
+        })}}
     />
     <br /><br />
 
     <label htmlFor="dept">Department :</label>
-    <select id="dept">
+    <select id="dept" value={student.department}
+    onChange={(e)=>{Setstudent({...student,department:e.target.value})}}
+    >
         <option value="">Select Department</option>
         <option value="CSE">CSE</option>
         <option value="ECE">ECE</option>
@@ -49,7 +88,10 @@ return(
     <br /><br />
 
     <label htmlFor="year">Year :</label>
-    <select id="year">
+    <select id="year" value={student.year}
+        onChange={(e)=>{Setstudent({
+            ...student,year:e.target.value
+        })}}>
         <option value="">Select Year</option>
         <option value="1">1st Year</option>
         <option value="2">2nd Year</option>
@@ -59,7 +101,10 @@ return(
     <br /><br />
 
     <label htmlFor="section">Section :</label>
-    <select id="section">
+    <select id="section" value={student.section}
+        onChange={(e)=>{Setstudent({
+            ...student,section:e.target.value
+        })}}>
         <option value="">Select Section</option>
         <option value="A">A</option>
         <option value="B">B</option>
@@ -67,7 +112,7 @@ return(
     </select>
     <br /><br />
 
-    <label>Gender :</label>
+    <label htmlFor="gender" >Gender :</label>
 
     <label htmlFor="male">Male</label>
     <input
@@ -75,6 +120,10 @@ return(
         id="male"
         name="gender"
         value="male"
+        
+        onChange={(e)=>{Setstudent({
+            ...student,gender:e.target.value
+        })}}
     />
 
     <label htmlFor="female">Female</label>
@@ -83,6 +132,10 @@ return(
         id="female"
         name="gender"
         value="female"
+        
+        onChange={(e)=>{Setstudent({
+            ...student,gender:e.target.value
+        })}}
     />
 
     <label htmlFor="others">Others</label>
@@ -91,6 +144,9 @@ return(
         id="others"
         name="gender"
         value="other"
+        onChange={(e)=>{Setstudent({
+            ...student,gender:e.target.value
+        })}}
     />
 
     <br /><br />
